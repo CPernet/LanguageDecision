@@ -8,4 +8,4 @@ Repo for the analysis of a language related task in healthy participants and str
 3. Activate the new environment
 		`source activate lang-dec`
 4. Start Jupyter Notebook
-	`jupyter notebook Language\ Decision\ Model.ipynb`
+		`jupyter notebook Language\ Decision\ Model.ipynb`
