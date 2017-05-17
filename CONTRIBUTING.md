@@ -54,7 +54,8 @@ Jupyter notebooks.
 ## Setting up a Development Environment
 1. Install Anaconda, create & activate a new virtual environment as described in the README file
 2. *(Optional)* To automatically generate python files from Jupyter notebooks every time a notebook is saved,
-install the Jupyter post-save hook by running `utils/jupyter-config/setup.sh`. 
+install the Jupyter post-save hook by running `utils/jupyter-config/setup.sh`. Note that this script only supports
+MacOS and Linux hosts at the moment.
 
 ## Code Style
 All Python code, including code found in Jupyter notebooks, should adhere to the [PEP-8 style guide](https://www.python.org/dev/peps/pep-0008/),
