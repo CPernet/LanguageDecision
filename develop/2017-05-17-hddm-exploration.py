@@ -45,11 +45,12 @@ model.print_stats().__class__
 
 # In[27]:
 
-# Fit posterior distributions
+# Fit posterior RT distributions
 model.plot_posteriors()
 
 
-# In[ ]:
+# In[28]:
 
-
+# Plot theoretical RT distributions
+model.plot_posterior_predictive()
 
