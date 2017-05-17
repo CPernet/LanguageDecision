@@ -13,16 +13,6 @@ large (i.e. more than 8-10 code cells per notebook).
 The files under `language-decision/` represent the final model and serve as a report on this project. Only refined
 aspects of the model should be included under this directory.
 
-All documentation should go under `docs/`. This project uses reStructuredText as the preferred file format for 
-documentation. These files should aim to describe the more technical aspects of the project, and should include:  
-- Function descriptions  
-- Data structures  
-- Descriptions of additional packages used  
-- Justification for any assumptions made  
-- Model evaluation  
-- Identified limitations  
-Note that this documentation should *complement* the accompanying text in Jupyter notebooks - not act as a substitute.
-
 General utilities are found under `utils/`. 
 
 Example usage of various model aspects is found under `examples/`, and can either take the form of python scripts or
@@ -72,4 +62,12 @@ In a nutshell:
 Code in Jupyter notebooks should follow a logical structure, and should always be accompanied by explanatory text, 
 ideally both before and after a particular analysis (that produces output).
 
-Technical documentation should go under `docs/`, to avoid jeopardising clarity in individual Jupyter notebooks.
+All technical documentation should go under `docs/`. This project uses reStructuredText as the preferred file format for 
+documentation. These files should aim to describe the more technical aspects of the project, and should include:  
+- Function descriptions  
+- Data structures  
+- Descriptions of additional packages used  
+- Justification for any assumptions made  
+- Model evaluation  
+- Identified limitations  
+Note that this documentation should *complement* the accompanying text in Jupyter notebooks - not act as a substitute.
