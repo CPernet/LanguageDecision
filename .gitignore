@@ -1,2 +1,5 @@
 .ipynb_*
 *.html
+*.swp
+*.tmp
+.DS_*

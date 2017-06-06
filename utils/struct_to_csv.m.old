@@ -1,0 +1,16 @@
+%// Extract field data
+fields = repmat(fieldnames(data), numel(data), 1);
+values = struct2cell(data);
+
+%// Convert all numerical values to strings
+idx = cellfun(@isnumeric, values); 
+values(idx) = cellfun(@num2str, values(idx), 'UniformOutput', 0);
+
+%// Combine field names and values in the same array
+C = {fields{:}; values{:}};
+
+%// Write fields to CSV file
+fid = fopen('myfile.csv', 'wt');
+fmt_str = repmat('%s,', 1, size(C, 2));
+fprintf(fid, [fmt_str(1:end - 1), '\n'], C{:});
+fclose(fid);

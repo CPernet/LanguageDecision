@@ -8,7 +8,7 @@
 get_ipython().magic('matplotlib inline')
 
 
-# ## Following the Quick-Start Tutorial
+# ## Quick-Start Tutorial
 # 
 # As found in the hddm repo README file - see https://github.com/hddm-devs/hddm
 
@@ -26,12 +26,7 @@ model = hddm.HDDM(data, depends_on={'v': 'difficulty'})
 model.sample(2000, burn=20)
 
 
-# With regards to sampling:  
-# - This guy offers a condensed version of what MCMC sampling is about https://jeremykun.com/2015/04/06/markov-chain-monte-carlo-without-all-the-bullshit/ ; it looks straight-forward enough  
-# - Trodding through the docs may provide may provide more insight into why they use 2000 sampling points (my guess is it's a good performance/accuracy tradeoff), and why their burn-in is 20 => **TODO**  
-# - More info about the whole burn-in business here http://users.stat.umn.edu/~geyer/mcmc/burn.html => **TODO**  
-# 
-# Also - pymc throws a bunch of depreciation warnings, might be worth contacting their mailing list & maybe try to fix it? => **TODO**
+# Notes on MCMC sampling:
 
 # In[19]:
 
@@ -41,7 +36,7 @@ model.print_stats()
 model.print_stats().__class__
 
 
-# `print_stats()` is literally just a printer - it doesn't return a data structure. Find out how to get this info in a nice python data structure => **TODO**
+# `print_stats()` is literally just a printer - it doesn't return a data structure. Could parse this info in a nice python data structure?
 
 # In[27]:
 
@@ -53,4 +48,15 @@ model.plot_posteriors()
 
 # Plot theoretical RT distributions
 model.plot_posterior_predictive()
+
+
+# -------
+
+# ## Demo
+# 
+# As found at http://ski.clps.brown.edu/hddm_docs/tutorial_python.html
+
+# In[ ]:
+
+
 
