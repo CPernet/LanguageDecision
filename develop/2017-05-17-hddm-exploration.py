@@ -36,7 +36,8 @@ model.print_stats()
 model.print_stats().__class__
 
 
-# `print_stats()` is literally just a printer - it doesn't return a data structure. Could parse this info in a nice python data structure?
+# `print_stats()` is literally just a printer - it doesn't return a data structure.
+# Could parse this info in a nice python data structure?
 
 # In[27]:
 
