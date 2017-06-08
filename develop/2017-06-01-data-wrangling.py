@@ -60,7 +60,7 @@ subject
 
 # Now that the data is in a desirable format, we can dump it to a CSV file
 
-# In[38]:
+# In[39]:
 
 import csv
 
@@ -68,4 +68,68 @@ with open('../data/data_18333.csv', 'w') as f:
     w = csv.DictWriter(f, csv_keys)
     w.writeheader()
     w.writerows(subject)
+
+
+# ## Convert all .mat files to .csv
+
+# Convert data from .mat files to .csv files for use by the HDDM library
+
+# In[61]:
+
+keys = ['rt', 'response', 'stim']
+
+
+# In[72]:
+
+def mat2py(mat_path):
+    """
+    Function to convert mat file to a pythonic data structure
+    Returns list of dictionaries mapping to spectific attributes
+    """
+    data = scio.loadmat(mat_path, struct_as_record=False)
+    
+    dat_struct = data['data'][0,0]
+    
+    reaction_times = dat_struct.rt1.tolist()[0]
+    responses = [x[0] for x in dat_struct.perf1.tolist()]
+    stimuli = [x[0] for x in dat_struct.conditions1.tolist()]
+
+    subject = []
+
+    for exp_run in list(zip(reaction_times, responses, stimuli)):
+        trial = dict.fromkeys(keys)
+        trial['rt'], trial['response'], trial['stim'] = exp_run
+        subject.append(trial)
+    
+    return subject 
+
+
+# In[75]:
+
+import csv
+
+def subject2csv(subject, mat_path):
+    csv_path = mat_path.replace('.mat', '.csv')
+    with open(csv_path, 'w') as f:
+        w = csv.DictWriter(f, keys)
+        w.writeheader()
+        w.writerows(subject)
+
+
+# In[74]:
+
+"""
+Iterate through all .mat files in data directory and 
+convert them to csv format
+"""
+
+import os
+import glob
+
+data_dir = '../data/pilot_subjects/'
+
+mat_files = glob.glob(str(data_dir) + '*.mat')
+
+for mat in mat_files:
+    subject2csv(mat2py(mat), mat)
 
