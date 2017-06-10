@@ -36,8 +36,7 @@ model.print_stats()
 model.print_stats().__class__
 
 
-# `print_stats()` is literally just a printer - it doesn't return a data structure.
-# Could parse this info in a nice python data structure?
+# `print_stats()` is literally just a printer - it doesn't return a data structure. Could parse this info in a nice python data structure?
 
 # In[27]:
 
@@ -56,8 +55,3 @@ model.plot_posterior_predictive()
 # ## Demo
 # 
 # As found at http://ski.clps.brown.edu/hddm_docs/tutorial_python.html
-
-# In[ ]:
-
-
-
