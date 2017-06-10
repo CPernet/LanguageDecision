@@ -11,7 +11,7 @@
 
 import scipy.io as scio
 
-# Import .mat file as python object instead of numpy array to make life a little more bearable
+# Import .mat file as python object
 data = scio.loadmat('../data/data_18333.mat', struct_as_record=False)
 
 
@@ -29,7 +29,7 @@ dat_struct = data['data'][0,0]  # Actual data structure, owns to matlab weirdnes
 
 # Before outputing to CSV, data for each subject will go in a python dictionary in the form of key --> array. The plan is to then create an array of dictionaries for all patients, with each dictionary representing the data gathered for an individual
 
-# In[36]:
+# In[3]:
 
 """
 Conversion from convoluted numpy array that scipy.io spits out to a more
@@ -55,12 +55,10 @@ for exp_run in list(zip(reaction_times, responses, stimuli)):
     trial['rt'], trial['response'], trial['stim'] = exp_run
     subject.append(trial)
 
-subject
-
 
 # Now that the data is in a desirable format, we can dump it to a CSV file
 
-# In[39]:
+# In[4]:
 
 import csv
 
@@ -71,15 +69,15 @@ with open('../data/data_18333.csv', 'w') as f:
 
 
 # ## Convert all .mat files to .csv
-
+# 
 # Convert data from .mat files to .csv files for use by the HDDM library
 
-# In[61]:
+# In[5]:
 
 keys = ['rt', 'response', 'stim']
 
 
-# In[72]:
+# In[6]:
 
 def mat2py(mat_path):
     """
@@ -101,29 +99,27 @@ def mat2py(mat_path):
         trial['rt'], trial['response'], trial['stim'] = exp_run
         subject.append(trial)
     
-    return subject 
+    return subject
 
 
-# In[75]:
-
-import csv
+# In[7]:
 
 def subject2csv(subject, mat_path):
     csv_path = mat_path.replace('.mat', '.csv')
+    print(csv_path)
     with open(csv_path, 'w') as f:
         w = csv.DictWriter(f, keys)
         w.writeheader()
         w.writerows(subject)
 
 
-# In[74]:
+# In[8]:
 
 """
-Iterate through all .mat files in data directory and 
+Iterate through all .mat files in the data directory and 
 convert them to csv format
 """
 
-import os
 import glob
 
 data_dir = '../data/pilot_subjects/'
@@ -133,3 +129,5 @@ mat_files = glob.glob(str(data_dir) + '*.mat')
 for mat in mat_files:
     subject2csv(mat2py(mat), mat)
 
+
+# A cleaned-up version of the above is found under `utils/matparser.py`
