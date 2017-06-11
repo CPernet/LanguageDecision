@@ -35,7 +35,7 @@ def parse_condition(stim_num):
         return 'US'
 
 
-# In[29]:
+# In[31]:
 
 import csv
 import glob 
@@ -56,14 +56,75 @@ for csv_file in glob.glob(csv_dir + 'data*.csv'):
     subjects.append(subject)
     
 keys = subject[0].keys()
-print(keys)
-
 
 with open('../data/all_subjects.csv', 'w') as out:
         writer = csv.DictWriter(out, keys)
         writer.writeheader()
         for subj in subjects:
             writer.writerows(subj)
-        
-print(subjects)
 
+
+# ## First stab at hddm model fit
+
+# In[43]:
+
+import hddm
+
+data = hddm.load_csv('../data/all_subjects_clean.csv')
+
+model = hddm.HDDM(data, depends_on={'v': 'stim'})
+model.find_starting_values()
+model.sample(6000, burn=20)
+
+
+# In[44]:
+
+model.print_stats()
+
+
+# #### Plot posteriors
+
+# In[45]:
+
+get_ipython().magic('matplotlib inline')
+model.plot_posteriors()
+
+
+# #### Plot posterior of drift rate for group means
+
+# In[46]:
+
+v_SS, v_CP, v_CS, v_US = model.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
+
+hddm.analyze.plot_posterior_nodes([v_SS, v_CP, v_CS, v_US])
+
+
+# Calculate the proportion of the posteriors in which the drift rate for one condition is greater than the other
+
+# In[54]:
+
+print('P(SS > US) = ' + str((v_SS.trace() > v_US.trace()).mean()))
+print('P(CP > SS) = ' + str((v_CP.trace() > v_SS.trace()).mean()))
+print('P(CS > SS) = ' + str((v_CS.trace() > v_SS.trace()).mean()))
+print('P(CP > CS) = ' + str((v_CP.trace() > v_CS.trace()).mean()))
+
+
+# Therefore:  
+# - The drift rate for CP is significantly lower than all other conditions  
+# - The drift rate for CS is significantly 
+
+# #### Check for model convergence 
+
+# In[48]:
+
+models = []
+for i in range(5):
+    m = hddm.HDDM(data, depends_on={'v': 'stim'})
+    m.find_starting_values()
+    m.sample(6000, burn=20)
+    models.append(m)
+
+hddm.analyze.gelman_rubin(models)
+
+
+# Models converge!
