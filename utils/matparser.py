@@ -35,7 +35,26 @@ def mat2csv(mat_path):
     """
     parsed_mat = _import_mat(mat_path)
 
-    _write_csv(parsed_mat, mat_path)
+    dicts_to_csv(parsed_mat, mat_path)
+
+
+def dicts_to_csv(dict_list, mat_path, out_path=None):
+    """
+    Write a list of dictionaries to a .csv file
+
+    Args:
+    -- dict_list => list of dictionaries to be written to .csv file
+    -- mat_path => file path of original .mat file
+    -- out_path (optional) => output path. If not provided, original .mat path
+    is used, changing the file extension to .csv
+    """
+    if not out_path:
+        out_path = str(mat_path).replace('.mat', '.csv')
+
+    with open(out_path, 'w') as out:
+        writer = csv.DictWriter(out, CSV_KEYS)
+        writer.writeheader()
+        writer.writerows(dict_list)
 
 
 def _import_mat(mat_path):
@@ -63,22 +82,3 @@ def _import_mat(mat_path):
         subject.append(trial)
 
     return subject
-
-
-def _write_csv(dict_list, mat_path, out_path=None):
-    """
-    Write a list of dictionaries to a .csv file
-
-    Args:
-    -- dict_list => list of dictionaries to be written to .csv file
-    -- mat_path => file path of original .mat file
-    -- out_path (optional) => output path. If not provided, original .mat path
-    is used, changing the file extension to .csv
-    """
-    if not out_path:
-        out_path = str(mat_path).replace('.mat', '.csv')
-
-    with open(out_path, 'w') as out:
-        writer = csv.DictWriter(out, CSV_KEYS)
-        writer.writeheader()
-        writer.writerows(dict_list)

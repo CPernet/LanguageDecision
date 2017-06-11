@@ -131,3 +131,8 @@ for mat in mat_files:
 
 
 # A cleaned-up version of the above is found under `utils/matparser.py`
+
+# In[10]:
+
+dat_struct.__dict__
+
