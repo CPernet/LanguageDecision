@@ -110,8 +110,9 @@ print('P(CP > CS) = ' + str((v_CP.trace() > v_CS.trace()).mean()))
 
 
 # Therefore:  
-# - The drift rate for CP is significantly lower than all other conditions  
-# - The drift rate for CS is significantly 
+# - The drift rate for **CP** is significantly lower than all other conditions  
+# - The drift rate for **CS** is significantly lower than **SS** and **US**, but significantly higher than **CP**  
+# - The drift rates for **SS** and **US** are not significantly different  
 
 # #### Check for model convergence 
 
