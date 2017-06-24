@@ -22,7 +22,7 @@
 # - `stim`: Stimulus (SS/CP/CS/US)  
 # - `response`: Response to stimulus (True(1)/False(0))  
 
-# In[21]:
+# In[1]:
 
 
 def parse_condition(stim_num):
@@ -36,7 +36,7 @@ def parse_condition(stim_num):
         return 'US'
 
 
-# In[31]:
+# In[2]:
 
 
 import csv
@@ -68,7 +68,7 @@ with open('../data/all_subjects.csv', 'w') as out:
 
 # ## First stab at hddm model fit
 
-# In[43]:
+# In[57]:
 
 
 import hddm
@@ -80,15 +80,25 @@ model.find_starting_values()
 model.sample(6000, burn=20)
 
 
-# In[44]:
+# In[4]:
 
 
 model.print_stats()
 
 
+# ##### Parameters of Interest
+# 
+# - Mean of *a* = 2.39576 (std = 0.152745)  
+# - Mean of *t* = 0.576694 s  
+# - Dift rate (v) mean values:  
+#     - CP = 1.47559  
+#     - CS = 1.95786  
+#     - SS = 2.37192  
+#     - US = 2.28449
+
 # #### Plot posteriors
 
-# In[45]:
+# In[5]:
 
 
 get_ipython().magic('matplotlib inline')
@@ -97,7 +107,7 @@ model.plot_posteriors()
 
 # #### Plot posterior of drift rate for group means
 
-# In[46]:
+# In[6]:
 
 
 v_SS, v_CP, v_CS, v_US = model.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
@@ -107,7 +117,7 @@ hddm.analyze.plot_posterior_nodes([v_SS, v_CP, v_CS, v_US])
 
 # Calculate the proportion of the posteriors in which the drift rate for one condition is greater than the other
 
-# In[54]:
+# In[7]:
 
 
 print('P(SS > US) = ' + str((v_SS.trace() > v_US.trace()).mean()))
@@ -123,7 +133,7 @@ print('P(CP > CS) = ' + str((v_CP.trace() > v_CS.trace()).mean()))
 
 # #### Check for model convergence 
 
-# In[48]:
+# In[8]:
 
 
 models = []
@@ -137,3 +147,33 @@ hddm.analyze.gelman_rubin(models)
 
 
 # Models converge!
+
+# ## Explore Bias
+
+# In[65]:
+
+
+model_bias = hddm.HDDM(data, depends_on={'v': 'stim', 'z': 'stim'}, bias=True)
+model_bias.find_starting_values()
+model_bias.sample(6000, burn=20)
+
+
+# In[67]:
+
+
+model_bias.plot_posteriors()
+
+
+# In[66]:
+
+
+model_bias.print_stats()
+
+
+# In[70]:
+
+
+model_bias.print_stats()
+
+
+# z values don't appear to significantly vary 
