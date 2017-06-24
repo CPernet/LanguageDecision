@@ -9,6 +9,7 @@
 
 # In[1]:
 
+
 import scipy.io as scio
 
 # Import .mat file as python object
@@ -24,12 +25,14 @@ data = scio.loadmat('../data/data_18333.mat', struct_as_record=False)
 
 # In[2]:
 
+
 dat_struct = data['data'][0,0]  # Actual data structure, owns to matlab weirdness
 
 
 # Before outputing to CSV, data for each subject will go in a python dictionary in the form of key --> array. The plan is to then create an array of dictionaries for all patients, with each dictionary representing the data gathered for an individual
 
 # In[3]:
+
 
 """
 Conversion from convoluted numpy array that scipy.io spits out to a more
@@ -60,6 +63,7 @@ for exp_run in list(zip(reaction_times, responses, stimuli)):
 
 # In[4]:
 
+
 import csv
 
 with open('../data/data_18333.csv', 'w') as f:
@@ -74,10 +78,12 @@ with open('../data/data_18333.csv', 'w') as f:
 
 # In[5]:
 
+
 keys = ['rt', 'response', 'stim']
 
 
 # In[6]:
+
 
 def mat2py(mat_path):
     """
@@ -104,6 +110,7 @@ def mat2py(mat_path):
 
 # In[7]:
 
+
 def subject2csv(subject, mat_path):
     csv_path = mat_path.replace('.mat', '.csv')
     print(csv_path)
@@ -114,6 +121,7 @@ def subject2csv(subject, mat_path):
 
 
 # In[8]:
+
 
 """
 Iterate through all .mat files in the data directory and 
@@ -133,6 +141,7 @@ for mat in mat_files:
 # A cleaned-up version of the above is found under `utils/matparser.py`
 
 # In[10]:
+
 
 dat_struct.__dict__
 

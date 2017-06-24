@@ -59,7 +59,7 @@ for csv_file in glob.glob(csv_dir + 'data*.csv'):
     
 keys = subject[0].keys()
 
-with open('../data/all_subjects.csv', 'w') as out:
+with open('../data/controls.csv', 'w') as out:
         writer = csv.DictWriter(out, keys)
         writer.writeheader()
         for subj in subjects:
@@ -176,4 +176,4 @@ model_bias.print_stats()
 model_bias.print_stats()
 
 
-# z values don't appear to significantly vary 
+# z values don't appear to significantly vary
