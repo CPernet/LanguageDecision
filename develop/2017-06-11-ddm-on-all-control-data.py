@@ -1,9 +1,9 @@
 
 # coding: utf-8
 
-# # DDM for All Patient Data
+# # DDM for All Control Data
 # 
-# Parse all patient data to a single CSV, then check if subject data can fit a hierarchical drift decision model for different stimuli types
+# Parse all control data to a single CSV, then check if subject data can fit a hierarchical drift decision model for different stimuli types
 
 # Experimental stimuli are as follows:  
 # - Condition 1: Same stimuli (see cat / hear cat) -- `SS`  
@@ -24,6 +24,7 @@
 
 # In[21]:
 
+
 def parse_condition(stim_num):
     if stim_num == '1':
         return 'SS'
@@ -36,6 +37,7 @@ def parse_condition(stim_num):
 
 
 # In[31]:
+
 
 import csv
 import glob 
@@ -68,6 +70,7 @@ with open('../data/all_subjects.csv', 'w') as out:
 
 # In[43]:
 
+
 import hddm
 
 data = hddm.load_csv('../data/all_subjects_clean.csv')
@@ -79,12 +82,14 @@ model.sample(6000, burn=20)
 
 # In[44]:
 
+
 model.print_stats()
 
 
 # #### Plot posteriors
 
 # In[45]:
+
 
 get_ipython().magic('matplotlib inline')
 model.plot_posteriors()
@@ -94,6 +99,7 @@ model.plot_posteriors()
 
 # In[46]:
 
+
 v_SS, v_CP, v_CS, v_US = model.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
 
 hddm.analyze.plot_posterior_nodes([v_SS, v_CP, v_CS, v_US])
@@ -102,6 +108,7 @@ hddm.analyze.plot_posterior_nodes([v_SS, v_CP, v_CS, v_US])
 # Calculate the proportion of the posteriors in which the drift rate for one condition is greater than the other
 
 # In[54]:
+
 
 print('P(SS > US) = ' + str((v_SS.trace() > v_US.trace()).mean()))
 print('P(CP > SS) = ' + str((v_CP.trace() > v_SS.trace()).mean()))
@@ -117,6 +124,7 @@ print('P(CP > CS) = ' + str((v_CP.trace() > v_CS.trace()).mean()))
 # #### Check for model convergence 
 
 # In[48]:
+
 
 models = []
 for i in range(5):

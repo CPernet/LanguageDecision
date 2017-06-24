@@ -4,3 +4,4 @@
 *.tmp
 .DS_*
 .idea/
+.vagrant/
