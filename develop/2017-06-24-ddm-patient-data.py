@@ -73,14 +73,14 @@ with open('../data/patients.csv', 'w') as out:
 
 # ## Fit to HDDM model
 
-# In[28]:
+# In[34]:
 
 
 import hddm
 
 data = hddm.load_csv('../data/patients_clean.csv')
 
-model = hddm.HDDM(data, depends_on={'v': 'stim', 'z': 'stim'}, bias=True)
+model = hddm.HDDM(data, depends_on={'v': 'stim'})
 model.find_starting_values()
 model.sample(6000, burn=20)
 
@@ -91,13 +91,13 @@ model.sample(6000, burn=20)
 model.print_stats()
 
 
-# In[30]:
+# In[37]:
 
 
 model.plot_posteriors()
 
 
-# In[31]:
+# In[35]:
 
 
 v_SS, v_CP, v_CS, v_US = model.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
@@ -105,7 +105,7 @@ v_SS, v_CP, v_CS, v_US = model.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)'
 hddm.analyze.plot_posterior_nodes([v_SS, v_CP, v_CS, v_US])
 
 
-# In[33]:
+# In[40]:
 
 
 print('P(SS > US) = ' + str((v_SS.trace() > v_US.trace()).mean()))
@@ -128,3 +128,5 @@ for i in range(5):
 
 hddm.analyze.gelman_rubin(models)
 
+
+# Models converge!
