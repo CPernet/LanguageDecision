@@ -130,3 +130,78 @@ hddm.analyze.gelman_rubin(models)
 
 
 # Models converge!
+
+# ## Explore Bias
+
+# In[48]:
+
+
+model_bias = hddm.HDDM(data, depends_on={'v': 'stim'}, bias=True)
+model_bias.find_starting_values()
+model_bias.sample(9000, burn=200)
+
+
+# In[49]:
+
+
+model_bias.print_stats()
+
+
+# In[50]:
+
+
+v_bSS, v_bCP, v_bCS, v_bUS = model_bias.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
+
+hddm.analyze.plot_posterior_nodes([v_bSS, v_bCP, v_bCS, v_bUS])
+
+
+# ### Bias dependent on stimulus type
+
+# In[55]:
+
+
+model_bias = hddm.HDDM(data, depends_on={'v': 'stim', 'z': 'stim'}, bias=True)
+model_bias.find_starting_values()
+model_bias.sample(10000, burn=200)
+
+
+# In[56]:
+
+
+model_bias.print_stats()
+
+
+# In[57]:
+
+
+v_bSS, v_bCP, v_bCS, v_bUS = model_bias.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
+
+hddm.analyze.plot_posterior_nodes([v_bSS, v_bCP, v_bCS, v_bUS])
+
+
+# In[59]:
+
+
+print('P(SS > US) = ' + str((v_bSS.trace() > v_bUS.trace()).mean()))
+print('P(CP > SS) = ' + str((v_bCP.trace() > v_bSS.trace()).mean()))
+print('P(CS > SS) = ' + str((v_bCS.trace() > v_bSS.trace()).mean()))
+print('P(CP > CS) = ' + str((v_bCP.trace() > v_bCS.trace()).mean()))
+
+
+# In[58]:
+
+
+z_bSS, z_bCP, z_bCS, z_bUS = model_bias.nodes_db.node[['z(SS)', 'z(CP)', 'z(CS)', 'z(US)']]
+
+hddm.analyze.plot_posterior_nodes([z_bSS, z_bCP, z_bCS, z_bUS])
+
+
+# In[ ]:
+
+
+print("Bias Probabilities")
+print('P(zSS > zUS) = ' + str((z_bSS.trace() > z_bUS.trace()).mean()))
+print('P(zCP > zSS) = ' + str((z_bCP.trace() > z_bSS.trace()).mean()))
+print('P(zCS > zSS) = ' + str((z_bCS.trace() > z_bSS.trace()).mean()))
+print('P(zCP > zCS) = ' + str((v_CP.trace() > z_bCS.trace()).mean()))
+
