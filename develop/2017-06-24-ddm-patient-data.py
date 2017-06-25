@@ -196,12 +196,12 @@ z_bSS, z_bCP, z_bCS, z_bUS = model_bias.nodes_db.node[['z(SS)', 'z(CP)', 'z(CS)'
 hddm.analyze.plot_posterior_nodes([z_bSS, z_bCP, z_bCS, z_bUS])
 
 
-# In[ ]:
+# In[63]:
 
 
 print("Bias Probabilities")
-print('P(zSS > zUS) = ' + str((z_bSS.trace() > z_bUS.trace()).mean()))
+print('P(zUS > zSS) = ' + str((z_bSS.trace() < z_bUS.trace()).mean()))
 print('P(zCP > zSS) = ' + str((z_bCP.trace() > z_bSS.trace()).mean()))
 print('P(zCS > zSS) = ' + str((z_bCS.trace() > z_bSS.trace()).mean()))
-print('P(zCP > zCS) = ' + str((v_CP.trace() > z_bCS.trace()).mean()))
+print('P(zCS > zCP) = ' + str((z_bCP.trace() < z_bCS.trace()).mean()))
 
