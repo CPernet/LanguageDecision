@@ -23,7 +23,7 @@ def compile_dir(path, out):
                 subject.append(trial)
         subjects.append(subject)
 
-    keys = subject[0].keys()
+    keys = subjects[0][0].keys()
 
     with open(out, 'w') as out_path:
         writer = csv.DictWriter(out_path, keys)
