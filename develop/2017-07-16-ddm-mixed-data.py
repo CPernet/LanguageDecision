@@ -5,11 +5,12 @@
 # 
 # DDM using both patient and matched control data
 
-# In[1]:
+# In[2]:
 
 
 get_ipython().magic('matplotlib inline')
 get_ipython().magic('cd ..')
+
 import warnings; warnings.filterwarnings('ignore')
 
 
@@ -53,14 +54,14 @@ get_ipython().system('cat data/patients_tagged.csv >> data/combined_clean.csv; s
 
 # ## Build HDDM model
 
-# In[38]:
+# In[3]:
 
 
 import hddm
 
 data = hddm.load_csv('data/combined_clean.csv')
 
-model = hddm.HDDM(data, depends_on={'v': 'stim', 'v': 'subj_type'})
+model = hddm.HDDM(data, depends_on={'v': ['stim', 'subj_type'], 'a': 'subj_type'})
 model.find_starting_values()
 model.sample(6000, burn=20)
 
