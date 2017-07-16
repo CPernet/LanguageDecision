@@ -5,24 +5,25 @@
 # 
 # Same as before, parse .mat files to CSV, then attempt to fit data to the hierarchical drift decision model, with 
 
-# In[23]:
+# In[7]:
 
 
 get_ipython().magic('matplotlib inline')
+get_ipython().magic('cd ..')
 import warnings; warnings.filterwarnings('ignore')
 
 
 # ## Prepare Data
 
-# In[16]:
+# In[8]:
 
 
 from utils import matparser
 import glob
 
-data_dir = '../data/patients_data/'
+data_dir = '../data/patients/'
 
-matparser.matparser(data_dir)
+matparser.parse_dir(data_dir)
 
 
 # In[21]:

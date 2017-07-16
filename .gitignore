@@ -5,3 +5,4 @@
 .DS_*
 .idea/
 .vagrant/
+*.pyc

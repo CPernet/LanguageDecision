@@ -11,7 +11,7 @@ import glob
 CSV_KEYS = ['rt', 'response', 'stim']
 
 
-def matparser(dir_path):
+def parse_dir(dir_path):
     """
     Parse all .mat files in a directory to .csv files
 
@@ -35,10 +35,10 @@ def mat2csv(mat_path):
     """
     parsed_mat = _import_mat(mat_path)
 
-    dicts_to_csv(parsed_mat, mat_path)
+    dicts2csv(parsed_mat, mat_path)
 
 
-def dicts_to_csv(dict_list, mat_path, out_path=None):
+def dicts2csv(dict_list, mat_path, out_path=None):
     """
     Write a list of dictionaries to a .csv file
 
