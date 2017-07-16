@@ -14,13 +14,6 @@ import warnings; warnings.filterwarnings('ignore')
 
 # ## Prepare Data
 
-# In[2]:
-
-
-import sys
-sys.path.append('../')
-
-
 # In[16]:
 
 
@@ -133,6 +126,8 @@ hddm.analyze.gelman_rubin(models)
 
 # ## Explore Bias
 
+# ### Per-subject bias
+
 # In[48]:
 
 
@@ -155,7 +150,7 @@ v_bSS, v_bCP, v_bCS, v_bUS = model_bias.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)'
 hddm.analyze.plot_posterior_nodes([v_bSS, v_bCP, v_bCS, v_bUS])
 
 
-# ### Bias dependent on stimulus type
+# ### Per stimulus type bias
 
 # In[55]:
 
