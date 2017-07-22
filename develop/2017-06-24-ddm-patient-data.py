@@ -125,7 +125,9 @@ hddm.analyze.gelman_rubin(models)
 
 # Models converge!
 
-# ## Explore Bias
+# ## Bias Analysis
+# 
+# 
 
 # ### Per-subject bias
 

@@ -43,9 +43,3 @@ def _parse_condition(stim_num):
         return 'CS'
     if stim_num == '4':
         return 'US'
-
-
-
-
-
-
