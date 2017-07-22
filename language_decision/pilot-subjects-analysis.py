@@ -47,6 +47,16 @@ model.print_stats()
 model.plot_posteriors()
 
 
+# ### Posterior of Drift Rate for Group Means
+
+# In[22]:
+
+
+v_SS, v_CP, v_CS, v_US = model.nodes_db.node[['v(SS)', 'v(CP)', 'v(CS)', 'v(US)']]
+
+hddm.analyze.plot_posterior_nodes([v_SS, v_CP, v_CS, v_US])
+
+
 # ### Checking for Model Convergence
 
 # In[20]:
@@ -60,4 +70,14 @@ for i in range(5):
     models.append(m)
 
 hddm.analyze.gelman_rubin(models)
+
+
+# ## Bias Analysis
+
+# In[21]:
+
+
+model_bias = hddm.HDDM(pilot_subjects, depends_on={'v': 'stim', 'z': 'stim'}, bias=True)
+model_bias.find_starting_values()
+model_bias.sample(6000, burn=20)
 
