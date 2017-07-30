@@ -1,4 +1,7 @@
 # LanguageDecision
+
+![travis-ci-status](https://travis-ci.org/CPernet/LanguageDecision.svg?branch=master)
+
 Repo for the analysis of a language related task in healthy participants and stroke patients
 
 ## Setup
@@ -6,7 +9,8 @@ Repo for the analysis of a language related task in healthy participants and str
 
 2. Create a new Anaconda environment based on the model's requirements
 
-		conda create --name lang-dec --file=environment.yml
+		conda env create --name lang-dec --file=environment-linux.yml  # On Linux hosts
+        conda env create --name lang-dec --file=environment-osx.yml    # On OSX hosts
 
 3. Activate the new environment
 
