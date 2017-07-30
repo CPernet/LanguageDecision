@@ -24,7 +24,7 @@ install:
   - conda info -a
 
   # Create test environment with conda
-  - conda env create -f environment.yml
+  - conda env create -f environment-linux.yml -n lang-dec
   - source activate lang-dec
   #- python setup.py install
 
