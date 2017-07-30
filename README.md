@@ -17,6 +17,6 @@ Repo for the analysis of a language related task in healthy participants and str
 
 		source activate lang-dec
 
-4. Start the main Jupyter Notebook
+4. Start the Jupyter Notebook main directory
 
-		jupyter notebook language-decision/language-decision-model.ipynb
+		jupyter notebook language-decision/
