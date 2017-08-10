@@ -23,8 +23,6 @@ def parse_dir(dir_path):
     for path in mat_paths:
         mat2csv(path)
 
-    return
-
 
 def mat2csv(mat_path):
     """
