@@ -12,7 +12,7 @@ class TestMatlabParser(unittest.TestCase):
 
 class TestModelTools(unittest.TestCase):
     def setUp(self):
-        self.legit_csv = './test_data/legit.csv'
+        self.legit_csv = 'tests/test_data/legit.csv'
 
     def test_convergence(self):
         """
