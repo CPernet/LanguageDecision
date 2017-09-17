@@ -1,0 +1,10 @@
+[Unit]
+Description=Language Decision Jupyter Notebook
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/lang-dec
+
+[Install]
+WantedBy=default.target
