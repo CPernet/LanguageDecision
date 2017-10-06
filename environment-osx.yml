@@ -1,8 +1,14 @@
 name: lang-dec
 channels:
 - pymc
+- conda-forge
 - defaults
 dependencies:
+- backports.shutil_get_terminal_size=1.0.0=py35_1
+- ipython=5.0.0=py35_1
+- jupyter=1.0.0=py35_0
+- seaborn=0.8.1=py35_0
+- statsmodels=0.8.0=py35_0
 - appnope=0.1.0=py35_0
 - bleach=1.5.0=py35_0
 - cycler=0.10.0=py35_0
@@ -12,13 +18,11 @@ dependencies:
 - html5lib=0.999=py35_0
 - icu=54.1=0
 - ipykernel=4.6.1=py35_0
-- ipython=6.1.0=py35_0
 - ipython_genutils=0.2.0=py35_0
 - ipywidgets=6.0.0=py35_0
 - jedi=0.10.2=py35_2
 - jinja2=2.9.6=py35_0
 - jsonschema=2.6.0=py35_0
-- jupyter=1.0.0=py35_3
 - jupyter_client=5.0.1=py35_0
 - jupyter_console=5.1.0=py35_0
 - jupyter_core=4.3.0=py35_0
@@ -47,6 +51,7 @@ dependencies:
 - pyqt=5.6.0=py35_2
 - python=3.5.3=1
 - python-dateutil=2.6.0=py35_0
+- python.app=1.2=py35_4
 - pytz=2017.2=py35_0
 - pyzmq=16.0.2=py35_0
 - qt=5.6.2=2
@@ -71,6 +76,7 @@ dependencies:
 - hddm=0.6.0=py35_0
 - kabuki=0.6.1=py35_0
 - pip:
+  - backports.shutil-get-terminal-size==1.0.0
   - ipython-genutils==0.2.0
   - jupyter-client==5.0.1
   - jupyter-console==5.1.0
