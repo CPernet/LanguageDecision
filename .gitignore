@@ -8,3 +8,5 @@
 *.pyc
 *.sublime-*
 jupyter.log
+data/
+.vscode/
