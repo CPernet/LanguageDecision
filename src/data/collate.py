@@ -1,5 +1,5 @@
 """
-Compile .csv data for individual patients in a directory
+Collate .csv data for individual patients in a directory
 to a single .csv file ready for consumption by the hddm
 library
 """
@@ -7,16 +7,16 @@ import glob
 import csv
 
 
-def compile_dir(path, out):
+def compile_dir(path, out, delimiter=','):
     csv_dir = str(path)
     subjects = []
 
-    for csv_file in glob.glob(csv_dir + 'data*.csv'):
+    for csv_file in glob.glob(csv_dir + 'subject*.*sv'):
         subject = []
 
-        subj_idx = csv_file[-9:-4]  # Use id from filename
+        subj_idx = csv_file.split('_')[0][-5:]  # Use id from filenames last 5 chars
         with open(csv_file, 'r') as f:
-            reader = csv.DictReader(f)
+            reader = csv.DictReader(f, delimiter=delimiter)
             for trial in reader:
                 trial['subj_idx'] = subj_idx
                 trial['stim'] = _parse_condition(trial['stim'])
