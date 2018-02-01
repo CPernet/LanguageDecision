@@ -11,10 +11,18 @@ def compile_dir(path, out, delimiter=','):
     csv_dir = str(path)
     subjects = []
 
-    for csv_file in glob.glob(csv_dir + 'subject*.*sv'):
+    if not csv_dir.endswith('/'):
+        csv_dir + '/'
+
+    extension = '.tsv' if delimiter == '\t' else '.csv'
+    files = glob.glob(csv_dir + 'sub*' + extension)
+    if not files:
+        return False
+
+    for csv_file in files:
         subject = []
 
-        subj_idx = csv_file.split('_')[0][-5:]  # Use id from filenames last 5 chars
+        subj_idx = csv_file.split('/')[-1].split('_')[0][-5:]  # Use id from filenames last 5 chars
         with open(csv_file, 'r') as f:
             reader = csv.DictReader(f, delimiter=delimiter)
             for trial in reader:

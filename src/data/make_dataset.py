@@ -49,7 +49,6 @@ def parse_dir(dir_path, out_dir, delimiter=','):
         dir_path = dir_path + '/'
 
     mat_paths = glob.glob(str(dir_path) + '*.mat')
-    print(mat_paths)
 
     for path in mat_paths:
         mat2delimited(path, out_dir, delimiter=delimiter)
@@ -154,11 +153,11 @@ if __name__ == '__main__':
         out_path = out_dir + '/'
 
     # Collate multiple delimited files to single file
-    from . import collate
+    import collate
     collated_path = out_path + 'collated'
     for subj_type in SUBJECT_TYPES:
         if subj_type[0] in str(dir_path):
-            collated_path = out_path + subj_type[2]
+            collated_path = out_path + subj_type[2] + '.' + out_type
     collate.compile_dir(path=out_path, out=collated_path, delimiter=delimiter)
 
     print("Done! - " + str(out_dir))
