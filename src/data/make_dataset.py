@@ -150,4 +150,15 @@ if __name__ == '__main__':
 
     parse_dir(dir_path, out_dir, delimiter)
 
+    if not out_dir.endswith('/'):
+        out_path = out_dir + '/'
+
+    # Collate multiple delimited files to single file
+    from . import collate
+    collated_path = out_path + 'collated'
+    for subj_type in SUBJECT_TYPES:
+        if subj_type[0] in str(dir_path):
+            collated_path = out_path + subj_type[2]
+    collate.compile_dir(path=out_path, out=collated_path, delimiter=delimiter)
+
     print("Done! - " + str(out_dir))
