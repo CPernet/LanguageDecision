@@ -1,8 +1,11 @@
 import csv
-import glob
 from operator import itemgetter
 from itertools import groupby
-from . import signal_detection
+try:
+    from . import signal_detection  # if loaded as module
+except (SystemError, ImportError):
+    import signal_detection  # if run as script
+
 
 STIM_PAIRS = (
     ('SS', 'CP'),  # phonology
