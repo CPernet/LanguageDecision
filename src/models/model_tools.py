@@ -25,6 +25,19 @@ def gen_models(csv_path, out_path=None, num=5, samples=8000, burn=200, *args, **
     return models
 
 
+def load_model(model_data, model_db, depends_on=None, bias=True, db_type='sqlite'):
+    """
+    Get model from database
+    :param model_data: path to derivative data csv
+    :param model_db: path to model database
+    :param depends_on: model parameter dependencies (e.g v: stim)
+    :return: loaded model
+    """
+    csv_data = hddm.load_csv(model_data)
+    model = hddm.HDDM(csv_data, depends_on=depends_on, bias=bias)
+    return model.load_db(dbname=model_db, db=db_type)
+
+
 def check_convergence(models):
     gelman_rubin = hddm.analyze.gelman_rubin(models)
 
