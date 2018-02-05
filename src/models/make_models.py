@@ -4,11 +4,10 @@ Generate drift diffusion models from processed csv data
 """
 import hddm
 import datetime
-
-# Fix model_tools import so it works when called both as module & script
-import os, sys 
-sys.path.append(os.path.dirname(os.path.realpath(__file__)))
-from model_tools import gen_models
+try:
+    from .model_tools import gen_models  # if loaded as module
+except (ImportError, SystemError):
+    from model_tools import gen_models  # if run as script
 
 PILOT_DATA = 'data/processed/pilot_clean.csv'
 CONTROL_DATA = 'data/processed/controls_clean.csv'
