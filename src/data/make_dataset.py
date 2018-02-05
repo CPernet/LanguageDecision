@@ -7,7 +7,8 @@ import glob
 import scipy.io as scio
 import csv
 
-#TSV_KEYS = ['Condition', 'Onset', 'Duration', 'Response', 'Error_onset', 'Error_duration']
+
+# TSV_KEYS = ['Condition', 'Onset', 'Duration', 'Response', 'Error_onset', 'Error_duration']
 KEYS = ['stim', 'onset', 'rt', 'response', 'error_onset', 'error_duration']
 SUBJECT_TYPES = (
     ('healthy', 'sub-healthy', 'sub-healthy_all'),
