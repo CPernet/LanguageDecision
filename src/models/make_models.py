@@ -2,18 +2,16 @@
 """
 Generate drift diffusion models from processed csv data
 """
-import hddm
-import datetime
 try:
     from .model_tools import gen_models  # if loaded as module
 except (ImportError, SystemError):
     from model_tools import gen_models  # if run as script
 
-PILOT_DATA = 'data/processed/pilot_clean.csv'
-CONTROL_DATA = 'data/processed/controls_clean.csv'
-PATIENT_DATA = 'data/processed/patients_clean.csv'
+HEALTHY_DATA = 'data/derivative/healthy/sub-healthy_all.csv'
+CONTROL_DATA = 'data/derivative/control/sub-control_all.csv'
+PATIENT_DATA = 'data/derivative/patient/sub-patient_all.csv'
 
-PILOT_MODELS = 'models/db_pilot'
+HEALTHY_MODELS = 'models/db_healthy'
 CONTROL_MODELS = 'models/db_controls'
 PATIENT_MODELS = 'models/db_patients'
 
@@ -42,6 +40,9 @@ def _make_v_t_dependent(path, out):
 
 
 if __name__ == '__main__':
-    make_models(PILOT_DATA, PILOT_MODELS)
+    import os
+    os.chdir('../..')
+    print(os.getcwd())
+    make_models(HEALTHY_DATA, HEALTHY_MODELS)
     make_models(CONTROL_DATA, CONTROL_MODELS)
     make_models(PATIENT_DATA, PATIENT_MODELS)
