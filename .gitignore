@@ -9,3 +9,4 @@
 *.sublime-*
 jupyter.log
 .vscode/
+models/
