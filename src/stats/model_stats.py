@@ -6,6 +6,8 @@ import sys
 src_dir = os.path.join(os.getcwd(), os.pardir, os.pardir)
 sys.path.append(src_dir)
 
+from operator import itemgetter
+from itertools import groupby
 from src.models.model_tools import load_model
 
 
@@ -42,15 +44,19 @@ def drift_rate_per_subject(model, conditions=CONDITIONS):
     traces = [(subj_idx, cond, model.nodes_db.node[node].trace())
               for subj_idx, cond, node in nodes]
 
-    subject_rates = list()
-    for trace in traces:
-        subj_idx, condition, drift_trace = trace
-        drift = drift_trace.mean()
-        subject_rates.append({
-            'subj_idx': subj_idx,
-            'stim': condition,
-            'v': drift
-        })
+    subject_rates = []
+
+    drift_means = [{'subj_idx': x[0], x[1]: x[2].mean()} for x in traces]
+    sorted_drifts = sorted(drift_means, key=itemgetter('subj_idx'))
+    for key, group in groupby(sorted_drifts, key=lambda x:x['subj_idx']):
+        subject = dict.fromkeys(['subj_idx'])
+        subject['subj_idx'] = key
+        group = list(group)
+        for condition in conditions:
+            subject[condition] = [x[condition] for x in list(group) if condition in x.keys()][0]
+        subject_rates.append(subject)
+
+    print(subject_rates)
     return subject_rates
 
 
