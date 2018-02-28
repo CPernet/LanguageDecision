@@ -6,22 +6,11 @@ import sys
 src_dir = os.path.join(os.getcwd(), os.pardir, os.pardir)
 sys.path.append(src_dir)
 
+import src.config as conf
 from operator import itemgetter
 from itertools import groupby
 from src.models.model_tools import load_model
 
-
-HEALTHY_DATA = 'data/derivative/healthy/sub-healthy_all.csv'
-CONTROL_DATA = 'data/derivative/control/sub-control_all.csv'
-PATIENT_DATA = 'data/derivative/patient/sub-patient_all.csv'
-
-HEALTHY_MODELS = 'models/db_healthy'
-CONTROL_MODELS = 'models/db_controls'
-PATIENT_MODELS = 'models/db_patients'
-
-HEALTHY_OUT = 'data/processed/healthy'
-CONTROL_OUT = 'data/processed/control'
-PATIENT_OUT = 'data/processed/patient'
 
 CONDITIONS = ['SS', 'CP', 'CS', 'US']
 
@@ -33,7 +22,7 @@ PARAM_KEYS = {
 }
 
 
-def get_parameter(model, parameter, conditions=CONDITIONS, between_subj=False, between_cond=False):
+def get_parameter(model, parameter, conditions=conf.CONDITIONS, between_subj=False, between_cond=False):
     """
 
     :param model:
@@ -113,15 +102,15 @@ def _param_per_condition(model, parameter, conditions):
 
 if __name__ == '__main__':
     os.chdir('../..')
-    healthy_vdep = HEALTHY_MODELS + '-v_dep'
-    m = load_model(HEALTHY_DATA, healthy_vdep, depends_on={'v': 'stim'})
+    healthy_vdep = conf.HEALTHY_MODELS_DIR + '-v_dep'
+    m = load_model(conf.HEALTHY_DATA, healthy_vdep, depends_on={'v': 'stim'})
     healthy_drifts = get_parameter(m, 'drift')
 
     print(_param_per_subject(m,'bias'))
 
     import csv
 
-    out_path = HEALTHY_OUT + '/healthy_driftrates.csv'
+    out_path = conf.HEALTHY_OUT_DIR + 'healthy_driftrates.csv'
     with open(out_path, 'w') as out:
         writer = csv.DictWriter(out, healthy_drifts[0].keys())
         writer.writeheader()
