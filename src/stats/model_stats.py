@@ -122,3 +122,47 @@ if __name__ == '__main__':
     for parameter, out_path in healthy_parameters:
         dicts_to_csv(parameter, out_path)
         print("Wrote " + out_path)
+
+    print("--------------------------------------")
+    print("Loading control model data...")
+    control_model = load_model(
+        conf.CONTROL_DATA,
+        conf.CONTROL_MODELS_DIR + '-v_dep',
+        depends_on={'v': 'stim'}
+    )
+
+    print("Gathering control model parameters...")
+    control_parameters = (
+        (get_parameter(control_model, 'drift', between_cond=True), conf.CONTROL_OUT_DIR + 'control_driftrates.csv'),
+        (get_parameter(control_model, 'bias', between_subj=True), conf.CONTROL_OUT_DIR + 'control_bias.csv'),
+        (get_parameter(control_model, 'threshold', between_subj=True), conf.CONTROL_OUT_DIR + 'control_threshold.csv'),
+        (get_parameter(control_model, 'non_decision', between_subj=True), conf.CONTROL_OUT_DIR + 'control_nondec.csv'),
+    )
+
+    print("Writing control model parameters to csv files...")
+    for parameter, out_path in control_parameters:
+        dicts_to_csv(parameter, out_path)
+        print("Wrote " + out_path)
+
+    print("--------------------------------------")
+    print("Loading patient model data...")
+    patient_model = load_model(
+        conf.PATIENT_DATA,
+        conf.PATIENT_MODELS_DIR + '-v_dep',
+        depends_on={'v': 'stim'}
+    )
+
+    print("Gathering patient model parameters...")
+    patient_parameters = (
+        (get_parameter(patient_model, 'drift', between_cond=True), conf.PATIENT_OUT_DIR + 'patient_driftrates.csv'),
+        (get_parameter(patient_model, 'bias', between_subj=True), conf.PATIENT_OUT_DIR + 'patient_bias.csv'),
+        (get_parameter(patient_model, 'threshold', between_subj=True), conf.PATIENT_OUT_DIR + 'patient_threshold.csv'),
+        (get_parameter(patient_model, 'non_decision', between_subj=True), conf.PATIENT_OUT_DIR + 'patient_nondec.csv'),
+    )
+
+    print("Writing patient model parameters to csv files...")
+    for parameter, out_path in patient_parameters:
+        dicts_to_csv(parameter, out_path)
+        print("Wrote " + out_path)
+
+    print("Done!")
