@@ -13,9 +13,9 @@ HEALTHY_DATA = DERIVATIVE_DIR + 'healthy/sub-healthy_all.csv'
 CONTROL_DATA = DERIVATIVE_DIR + 'control/sub-control_all.csv'
 PATIENT_DATA = DERIVATIVE_DIR + 'patient/sub-patient_all.csv'
 
-HEALTHY_MODELS_DIR = MODELS_DIR + 'db_healthy/'
-CONTROL_MODELS_DIR = MODELS_DIR + 'db_controls/'
-PATIENT_MODELS_DIR = MODELS_DIR + 'db_patients/'
+HEALTHY_MODELS_PATH = MODELS_DIR + 'db_healthy'
+CONTROL_MODELS_PATH = MODELS_DIR + 'db_controls'
+PATIENT_MODELS_PATH = MODELS_DIR + 'db_patients'
 
 HEALTHY_OUT_DIR = PROCESSED_DIR + 'healthy/'
 CONTROL_OUT_DIR = PROCESSED_DIR + 'control/'
