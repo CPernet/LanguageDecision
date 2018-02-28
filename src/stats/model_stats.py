@@ -6,6 +6,7 @@ import sys
 src_dir = os.path.join(os.getcwd(), os.pardir, os.pardir)
 sys.path.append(src_dir)
 
+import scipy.stats.mean as mean
 import src.config as conf
 from operator import itemgetter
 from itertools import groupby
@@ -46,10 +47,7 @@ def _param_per_group(model, parameter):
     :param parameter:
     :return:
     """
-    param_key = PARAM_KEYS[str(parameter)]
-    subjects = set(model.data.subj_idx.values.tolist())
-    print(model.nodes_db.node[['z']])
-    traces = [c.trace() for c in model.nodes_db.node[[param_key]]]
+    return mean([subject[parameter] for subject in _param_per_subject(model, parameter)])
 
 
 def _param_per_subject(model, parameter):
@@ -81,8 +79,8 @@ def _param_per_condition(model, parameter, conditions):
     subjects = set(model.data.subj_idx.values.tolist())
     cond_nodes = [(cond, str(param_key) + '_subj(' + cond + ')') for cond in conditions]
     nodes = [(subj_idx, cond, cond_node + '.' + str(subj_idx))
-                for cond, cond_node in cond_nodes
-                for subj_idx in subjects]
+             for cond, cond_node in cond_nodes
+             for subj_idx in subjects]
     traces = [(subj_idx, cond, model.nodes_db.node[node].trace())
               for subj_idx, cond, node in nodes]
 
@@ -101,17 +99,26 @@ def _param_per_condition(model, parameter, conditions):
 
 
 if __name__ == '__main__':
+    print("Initialising...")
+    from src.utils import dicts_to_csv
     os.chdir('../..')
-    healthy_vdep = conf.HEALTHY_MODELS_DIR + '-v_dep'
-    m = load_model(conf.HEALTHY_DATA, healthy_vdep, depends_on={'v': 'stim'})
-    healthy_drifts = get_parameter(m, 'drift')
 
-    print(_param_per_subject(m,'bias'))
+    print("Loading healthy model data...")
+    healthy_model = load_model(
+        conf.HEALTHY_DATA,
+        conf.HEALTHY_MODELS_DIR + '-v_dep',
+        depends_on={'v': 'stim'}
+    )
 
-    import csv
+    print("Gathering healthy model parameters...")
+    healthy_parameters = (
+        (get_parameter(healthy_model, 'drift', between_cond=True), conf.HEALTHY_OUT_DIR + 'healthy_driftrates.csv'),
+        (get_parameter(healthy_model, 'bias', between_subj=True), conf.HEALTHY_OUT_DIR + 'healthy_bias.csv'),
+        (get_parameter(healthy_model, 'threshold', between_subj=True), conf.HEALTHY_OUT_DIR + 'healthy_threshold.csv'),
+        (get_parameter(healthy_model, 'non_decision', between_subj=True), conf.HEALTHY_OUT_DIR + 'healthy_nondec.csv'),
+    )
 
-    out_path = conf.HEALTHY_OUT_DIR + 'healthy_driftrates.csv'
-    with open(out_path, 'w') as out:
-        writer = csv.DictWriter(out, healthy_drifts[0].keys())
-        writer.writeheader()
-        writer.writerows(healthy_drifts)
+    print("Writing healthy model parameters to csv files...")
+    for parameter, out_path in healthy_parameters:
+        dicts_to_csv(parameter, out_path)
+        print("Wrote " + out_path)
