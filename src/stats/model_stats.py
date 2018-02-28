@@ -6,10 +6,10 @@ import sys
 src_dir = os.path.join(os.getcwd(), os.pardir, os.pardir)
 sys.path.append(src_dir)
 
-import scipy.stats.mean as mean
 import src.config as conf
 from operator import itemgetter
 from itertools import groupby
+from numpy import mean
 from src.models.model_tools import load_model
 
 
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     print("Loading healthy model data...")
     healthy_model = load_model(
         conf.HEALTHY_DATA,
-        conf.HEALTHY_MODELS_DIR + '-v_dep',
+        conf.HEALTHY_MODELS_PATH + '-v_dep',
         depends_on={'v': 'stim'}
     )
 
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     print("Loading control model data...")
     control_model = load_model(
         conf.CONTROL_DATA,
-        conf.CONTROL_MODELS_DIR + '-v_dep',
+        conf.CONTROL_MODELS_PATH + '-v_dep',
         depends_on={'v': 'stim'}
     )
 
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     print("Loading patient model data...")
     patient_model = load_model(
         conf.PATIENT_DATA,
-        conf.PATIENT_MODELS_DIR + '-v_dep',
+        conf.PATIENT_MODELS_PATH + '-v_dep',
         depends_on={'v': 'stim'}
     )
 
