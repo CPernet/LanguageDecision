@@ -33,29 +33,21 @@ PARAM_KEYS = {
 }
 
 
-def drift_rate_per_condition(model, conditions=CONDITIONS, dependson_cond=True, raw_trace=False):
-    nodes = ['v']
-    if dependson_cond:
-        nodes = ['v(' + cond + ')' for cond in conditions]
-    traces = [c.trace() for c in model.nodes_db.node[nodes]]
-    [(x, m.nodes_db.node[x].trace().mean()) for x in m.nodes_db.node.keys() if 'v_subj' in x]
-    return [trace.mean() for trace in traces] if not raw_trace else traces
+def get_parameter(model, parameter, conditions=CONDITIONS, between_subj=False, between_cond=False):
+    """
 
-
-def drift_rate(model, conditions=CONDITIONS, between_subj=False, between_cond=False):
-    return _param_per_condition(model, 'drift', conditions)
-
-
-def threshold_per_model(model):
-    return
-
-
-def nondec_time_per_subject(model, conditions=CONDITIONS):
-    return
-
-
-def bias_per_condition(model, conditions=CONDITIONS):
-    return
+    :param model:
+    :param parameter:
+    :param conditions:
+    :param between_subj:
+    :param between_cond:
+    :return:
+    """
+    if between_cond:
+        return _param_per_condition(model, parameter, conditions)
+    if between_subj:
+        return _param_per_subject(model, parameter)
+    return _param_per_group(model, parameter)
 
 
 def _param_per_group(model, parameter):
@@ -123,9 +115,9 @@ if __name__ == '__main__':
     os.chdir('../..')
     healthy_vdep = HEALTHY_MODELS + '-v_dep'
     m = load_model(HEALTHY_DATA, healthy_vdep, depends_on={'v': 'stim'})
-    healthy_drifts = drift_rate(m)
+    healthy_drifts = get_parameter(m, 'drift')
 
-    _param_per_subject(m,'bias')
+    print(_param_per_subject(m,'bias'))
 
     import csv
 
@@ -134,4 +126,3 @@ if __name__ == '__main__':
         writer = csv.DictWriter(out, healthy_drifts[0].keys())
         writer.writeheader()
         writer.writerows(healthy_drifts)
-
