@@ -1,5 +1,5 @@
 """
-Make visualisations for results
+Make visualisations for pilot results
 """
 import pandas as pd
 import seaborn as sns
@@ -36,5 +36,25 @@ def plot_rts(derivative_path, out_path=None, plot_medians=False):
     fig.savefig(out_path)
 
 
-if __name__ == '__main__':
-    print('Plotting data...')
+def plot_accuracy(derivative_path, out_path=None):
+    return
+
+
+def plot_dprime(derivative_path, out_path=None):
+    return
+
+
+def plot_drift_rate(derivative_path, out_path=None):
+    return
+
+
+def plot_threshold(derivative_path, out_path=None):
+    return
+
+
+def plot_bias(derivative_path, out_path=None):
+    return
+
+
+def plot_nondec_time(derivative_path, out_path=None):
+    return
