@@ -102,7 +102,8 @@ def plot_threshold(processed_path, out_path=None):
     subjects_threshold = pd.read_csv(processed_path).threshold
 
     plot = sns.distplot(
-        subjects_threshold
+        subjects_threshold,
+        rug=True
     )
     plot.set_ylabel("Density")
     plot.set_xlabel("Threshold")
@@ -115,8 +116,34 @@ def plot_threshold(processed_path, out_path=None):
 
 
 def plot_bias(processed_path, out_path=None):
-    return
+    subjects_bias = pd.read_csv(processed_path).bias
+
+    plot = sns.distplot(
+        subjects_bias,
+        rug=True
+    )
+    plot.set_ylabel("Density")
+    plot.set_xlabel("Bias")
+
+    if out_path:
+        plot.set_title("Subject Bias")
+        fig = plot.get_figure()
+        fig.savefig(out_path)
+    return plot
 
 
 def plot_nondec_time(processed_path, out_path=None):
-    return
+    subjects_nondec = pd.read_csv(processed_path).non_decision
+
+    plot = sns.distplot(
+        subjects_nondec,
+        rug=True
+    )
+    plot.set_ylabel("Density")
+    plot.set_xlabel("Non-Decision Time (s)")
+
+    if out_path:
+        plot.set_title("Subject Non-Decision Time")
+        fig = plot.get_figure()
+        fig.savefig(out_path)
+    return plot
