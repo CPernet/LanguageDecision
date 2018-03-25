@@ -18,6 +18,7 @@ def plot_rts(derivative_path, out_path=None, plot_medians=False):
     stim_rts = subjects.groupby(['stim', 'subj_idx'])['rt'].median() if plot_medians \
         else subjects.groupby(['stim'])['rt']
 
+    plt.figure()
     plot = sns.violinplot(
         data=[stim_rts[stim] for stim in STIMULI] if plot_medians
         else [stim_rts.get_group(stim) for stim in STIMULI],
@@ -42,6 +43,7 @@ def plot_accuracy(derivative_path, out_path=None):
     stim_accs = subjects.groupby(['stim', 'subj_idx']).response.\
         agg(lambda x: pd.to_numeric(x, errors='coerce').sum() / x.count())
 
+    plt.figure()
     plot = sns.boxplot(
         data=[stim_accs[stim] for stim in STIMULI],
         showfliers=False
@@ -66,6 +68,7 @@ def plot_accuracy(derivative_path, out_path=None):
 def plot_dprime(processed_path, out_path=None):
     subjects_dprimes = pd.read_csv(processed_path)
 
+    plt.figure()
     plot = sns.violinplot(
         data=[subjects_dprimes[pair] for pair in STIMULI_PAIRS],
         palette="muted"
@@ -84,6 +87,7 @@ def plot_dprime(processed_path, out_path=None):
 def plot_drift_rate(processed_path, out_path=None):
     subjects_drift = pd.read_csv(processed_path)
 
+    plt.figure()
     plot = sns.violinplot(
         data=[subjects_drift[stim] for stim in STIMULI]
     )
@@ -101,6 +105,7 @@ def plot_drift_rate(processed_path, out_path=None):
 def plot_threshold(processed_path, out_path=None):
     subjects_threshold = pd.read_csv(processed_path).threshold
 
+    plt.figure()
     plot = sns.distplot(
         subjects_threshold,
         rug=True
@@ -118,6 +123,7 @@ def plot_threshold(processed_path, out_path=None):
 def plot_bias(processed_path, out_path=None):
     subjects_bias = pd.read_csv(processed_path).bias
 
+    plt.figure()
     plot = sns.distplot(
         subjects_bias,
         rug=True
@@ -135,6 +141,7 @@ def plot_bias(processed_path, out_path=None):
 def plot_nondec_time(processed_path, out_path=None):
     subjects_nondec = pd.read_csv(processed_path).non_decision
 
+    plt.figure()
     plot = sns.distplot(
         subjects_nondec,
         rug=True
