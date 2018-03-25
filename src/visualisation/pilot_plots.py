@@ -99,7 +99,19 @@ def plot_drift_rate(processed_path, out_path=None):
 
 
 def plot_threshold(processed_path, out_path=None):
-    return
+    subjects_threshold = pd.read_csv(processed_path).threshold
+
+    plot = sns.distplot(
+        subjects_threshold
+    )
+    plot.set_ylabel("Density")
+    plot.set_xlabel("Threshold")
+
+    if out_path:
+        plot.set_title("Subject Threshold")
+        fig = plot.get_figure()
+        fig.savefig(out_path)
+    return plot
 
 
 def plot_bias(processed_path, out_path=None):
