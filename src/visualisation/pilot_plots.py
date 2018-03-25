@@ -82,16 +82,29 @@ def plot_dprime(processed_path, out_path=None):
 
 
 def plot_drift_rate(processed_path, out_path=None):
-    return
+    subjects_drift = pd.read_csv(processed_path)
+
+    plot = sns.violinplot(
+        data=[subjects_drift[stim] for stim in STIMULI]
+    )
+    plot.set_xticklabels(STIMULI)
+    plot.set_xlabel("Conditions")
+    plot.set_ylabel("Drift Rate")
+
+    if out_path:
+        plot.set_title("Subject Drift Rate per Condition")
+        fig = plot.get_figure()
+        fig.savefig(out_path)
+    return plot
 
 
 def plot_threshold(processed_path, out_path=None):
     return
 
 
-def plot_bias(derivative_path, out_path=None):
+def plot_bias(processed_path, out_path=None):
     return
 
 
-def plot_nondec_time(derivative_path, out_path=None):
+def plot_nondec_time(processed_path, out_path=None):
     return
