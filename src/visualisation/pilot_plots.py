@@ -8,6 +8,7 @@ from scipy import mean, median
 
 
 STIMULI = ['SS', 'CP', 'CS', 'US']
+STIMULI_PAIRS = ['SS_CP', 'SS_CS', 'SS_US']
 TRIALS_PER_STIM = 30
 sns.set_style("whitegrid")
 
@@ -62,15 +63,29 @@ def plot_accuracy(derivative_path, out_path=None):
     return plot
 
 
-def plot_dprime(derivative_path, out_path=None):
+def plot_dprime(processed_path, out_path=None):
+    subjects_dprimes = pd.read_csv(processed_path)
+
+    plot = sns.violinplot(
+        data=[subjects_dprimes[pair] for pair in STIMULI_PAIRS],
+        palette="muted"
+    )
+    plot.set_xticklabels(STIMULI_PAIRS)
+    plot.set_xlabel("Condition Pairs")
+    plot.set_ylabel("d'")
+
+    if out_path:
+        plot.set_title("Subject Incongruence (d') Score")
+        fig = plot.get_figure()
+        fig.savefig(out_path)
+    return plot
+
+
+def plot_drift_rate(processed_path, out_path=None):
     return
 
 
-def plot_drift_rate(derivative_path, out_path=None):
-    return
-
-
-def plot_threshold(derivative_path, out_path=None):
+def plot_threshold(processed_path, out_path=None):
     return
 
 
