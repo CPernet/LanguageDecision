@@ -36,3 +36,4 @@ def _compare_bootstraped_medians(bs_sample1, bs_sample2):
             'low': scipy.stats.mstats.mquantiles(median_diffs, prob=[0.025])[0]
         }
     }
+
