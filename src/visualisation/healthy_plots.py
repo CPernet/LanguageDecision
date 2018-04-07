@@ -10,13 +10,18 @@ from scipy import mean, median
 STIMULI = ['SS', 'CP', 'CS', 'US']
 STIMULI_PAIRS = ['SS_CP', 'SS_CS', 'SS_US']
 TRIALS_PER_STIM = 30
+
+sns.set()
+palette = sns.cubehelix_palette(6, start=3, rot=1.9, gamma=.8, hue=2, reverse=True)
 sns.set_style("whitegrid")
+sns.set_palette(palette)
 
 
 def plot_rts(derivative_path, out_path=None, plot_medians=False):
     subjects = pd.read_csv(derivative_path)
-    stim_rts = subjects.groupby(['stim', 'subj_idx'])['rt'].median() if plot_medians \
-        else subjects.groupby(['stim'])['rt']
+    accurate_rts = subjects[pd.to_numeric(subjects.response, errors='coerce') > 0]
+    stim_rts = accurate_rts.groupby(['stim', 'subj_idx'])['rt'].median() if plot_medians \
+            else accurate_rts.groupby(['stim', 'subj_idx'])['rt'] 
 
     plt.figure()
     plot = sns.violinplot(
@@ -28,6 +33,7 @@ def plot_rts(derivative_path, out_path=None, plot_medians=False):
     plot.set_xlabel("Condition")
     y_label = "Median Reaction Time (s)" if plot_medians else "Reaction Time (s)"
     plot.set_ylabel(y_label)
+    plt.setp(plot.collections, alpha=.7)
 
     if out_path:
         title = "Subject Median Reaction Time per Condition" if plot_medians \
@@ -46,7 +52,8 @@ def plot_accuracy(derivative_path, out_path=None):
     plt.figure()
     plot = sns.boxplot(
         data=[stim_accs[stim] for stim in STIMULI],
-        showfliers=False
+        showfliers=False,
+        boxprops= dict(alpha=.7)
     )
     sns.swarmplot(
         data=[stim_accs[stim] for stim in STIMULI],
@@ -56,7 +63,7 @@ def plot_accuracy(derivative_path, out_path=None):
     plot.set_xticklabels(STIMULI)
     plot.set_xlabel("Condition")
     plot.set_ylabel("Accuracy Score")
-    plot.set_ylim(0, 1.01)
+    plot.set_ylim(0.8, 1.01)
 
     if out_path:
         plot.set_title("Subject Accuracy Score per Condition")
@@ -71,11 +78,12 @@ def plot_dprime(processed_path, out_path=None):
     plt.figure()
     plot = sns.violinplot(
         data=[subjects_dprimes[pair] for pair in STIMULI_PAIRS],
-        palette="muted"
+        palette=palette[1:]
     )
     plot.set_xticklabels(STIMULI_PAIRS)
     plot.set_xlabel("Condition Pairs")
     plot.set_ylabel("d'")
+    plt.setp(plot.collections, alpha=.7)
 
     if out_path:
         plot.set_title("Subject Incongruence (d') Score")
@@ -94,6 +102,7 @@ def plot_drift_rate(processed_path, out_path=None):
     plot.set_xticklabels(STIMULI)
     plot.set_xlabel("Conditions")
     plot.set_ylabel("Drift Rate")
+    plt.setp(plot.collections, alpha=.7)
 
     if out_path:
         plot.set_title("Subject Drift Rate per Condition")
@@ -108,6 +117,7 @@ def plot_threshold(processed_path, out_path=None):
     plt.figure()
     plot = sns.distplot(
         subjects_threshold,
+        color='steelblue',
         rug=True
     )
     plot.set_ylabel("Density")
@@ -126,6 +136,7 @@ def plot_bias(processed_path, out_path=None):
     plt.figure()
     plot = sns.distplot(
         subjects_bias,
+        color='steelblue',
         rug=True
     )
     plot.set_ylabel("Density")
@@ -144,6 +155,7 @@ def plot_nondec_time(processed_path, out_path=None):
     plt.figure()
     plot = sns.distplot(
         subjects_nondec,
+        color='steelblue',
         rug=True
     )
     plot.set_ylabel("Density")

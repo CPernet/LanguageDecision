@@ -15,7 +15,7 @@ if __name__ == '__main__':
     healthy_threshold = 'data/processed/healthy/healthy_threshold.csv'
     healthy_nondec = 'data/processed/healthy/healthy_nondec.csv'
 
-    healthy_plots.plot_rts(healthy_deriv, out_path=out_dir + 'healthy_rts')
+    healthy_plots.plot_rts(healthy_deriv, out_path=out_dir + 'healthy_rts', plot_medians=True)
     healthy_plots.plot_accuracy(healthy_deriv, out_path=out_dir + 'healthy_accs')
     healthy_plots.plot_dprime(healthy_dprimes, out_path=out_dir + 'healthy_dprimes')
     healthy_plots.plot_drift_rate(healthy_drifts, out_path=out_dir + 'healthy_drifts')
