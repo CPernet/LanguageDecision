@@ -9,6 +9,7 @@ from scipy import mean, median
 
 STIMULI = ['SS', 'CP', 'CS', 'US']
 STIMULI_PAIRS = ['SS_CP', 'SS_CS', 'SS_US']
+PAIR_LABELS = ['Phonetic', 'Semantic', 'Unrelated']
 TRIALS_PER_STIM = 30
 
 sns.set()
@@ -80,13 +81,13 @@ def plot_dprime(processed_path, out_path=None):
         data=[subjects_dprimes[pair] for pair in STIMULI_PAIRS],
         palette=palette[1:]
     )
-    plot.set_xticklabels(STIMULI_PAIRS)
-    plot.set_xlabel("Condition Pairs")
-    plot.set_ylabel("d'")
+    plot.set_xticklabels(PAIR_LABELS)
+    plot.set_xlabel("Incongruence Pairs")
+    plot.set_ylabel("Sensitivity Index (d')")
     plt.setp(plot.collections, alpha=.7)
 
     if out_path:
-        plot.set_title("Subject Incongruence (d') Score")
+        plot.set_title("Subject Incongruence Sensitivity (d') Score")
         fig = plot.get_figure()
         fig.savefig(out_path)
     return plot
